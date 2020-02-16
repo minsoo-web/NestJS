@@ -1,0 +1,21 @@
+{% extends "product/base.html" %}
+
+<!-- sign-up content -->
+{% block content %}
+<section class="cover" id="sign-up">
+  <h1>회원가입</h1>
+  {% if form %}
+  <form method="POST" action="/member/signup/" class="form-box">
+    {% csrf_token %} {{ form.as_p }}
+    <input type="submit" value="sign up" />
+  </form>
+  {% else %}
+  <div>{{ message }}</div>
+  <a href="/member/signup/"
+    ><button type="button" class="btn btn-primary">
+      go back
+    </button>
+  </a>
+  {% endif %}
+</section>
+{% endblock %}

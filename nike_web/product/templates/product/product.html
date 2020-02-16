@@ -1,0 +1,78 @@
+{% extends "product/base.html" %}
+<!-- title -->
+{% block title %}신발-나이키{% endblock %}
+
+<!-- aside -->
+{% block aside %}
+<aside>
+  <div class="category-filter-box">
+    <ul class="category-wrapper">
+      <li>
+        <a href=""><span>라이프스타일</span></a>
+      </li>
+      <li>
+        <a href=""><span>러닝</span></a>
+      </li>
+      <li>
+        <a href=""><span>트레이닝 & 짐</span></a>
+      </li>
+      <li>
+        <a href=""><span>조던</span></a>
+      </li>
+      <li>
+        <a href=""><span>축구</span></a>
+      </li>
+      <li>
+        <a href=""><span>골프</span></a>
+      </li>
+      <li>
+        <a href=""><span>테니스</span></a>
+      </li>
+      <li>
+        <a href=""><span>샌들 & 슬리퍼</span></a>
+      </li>
+    </ul>
+    <ul>
+      <div>
+        <span>신발 사이즈</span>
+        <button>접기</button>
+      </div>
+      <div>신발사이즈1</div>
+      <div>신발사이즈2</div>
+    </ul>
+  </div>
+</aside>
+{% endblock aside %}
+
+<!-- content -->
+{% block content %}
+<section id="product">
+  <div class="product-box">
+    <div class="product-wrapper flex-box">
+      <div class="card">
+        <!-- product img -->
+        <div class="img-wrapper">
+          <a href="/detail/">
+            <img
+              src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/CD0881-103/a893445e-c7c5-4b3f-a90e-31ff643728a7_primary.jpg?browse"
+              alt="상품1 이미지"
+            />
+          </a>
+        </div>
+        <div class="product-info">
+          <!-- item-title-->
+          <div class="item-title item-info">나이키 리액트 인피니티 런</div>
+          <!-- sub-title -->
+          <div class="item-subtitle item-info">
+            남성 신발 러닝
+          </div>
+          <!-- item-color 는 안 하기로 결정-->
+
+          <!-- price -->
+          <div class="item-info">199,000 원</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
