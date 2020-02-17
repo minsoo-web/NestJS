@@ -73,33 +73,44 @@ section {
 
 /* sign-up */
 #sign-up {
-  background-color: rosybrown;
+  /* background-color: rosybrown; */
 }
 
-#sign-up > h1 {
+#sign-up > h1,
+#sign-in > h1 {
   width: 380px;
   margin: 20px auto 0 auto;
   text-align: center;
 }
 
-#sign-up .form-box {
+#sign-up .form-box-signUp,
+#sign-in .form-box-signIn {
   /* border: 1px solid; */
   width: 380px;
   margin: 0 auto;
 }
-#sign-up .form-box p {
+#sign-up .form-box-signUp p {
   margin: 10px 0;
 }
 
-.sign-up-input {
+.sign-up-input,
+.sign-in-input {
   width: 380px;
   height: 44px;
-  border: 0.5px solid rgb(96, 96, 96);
+  border: 0.5px solid rgb(229, 229, 229);
   padding: 9px 12px;
 }
 
-.sign-up-input:focus {
-  /* outline: 1px solid; */
+.form-box-signUp input[type="submit"],
+.form-box-signIn input[type="submit"] {
+  margin-top: 20px;
+  background-color: black;
+  color: #fff;
+}
+
+/* sign-in */
+.form-box-signIn {
+  margin-top: 20px;
 }
 
 /* cart */

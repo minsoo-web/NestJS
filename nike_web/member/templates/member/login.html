@@ -1,10 +1,15 @@
-<div class="container">
-  <h1>login</h1>
+{% extends "product/base.html" %}
+
+<!-- sign-in content -->
+{% block content %}
+<section class="cover" id="sign-in">
+  <div class="logo-wrapper"><img src="" alt="나이키로고" /></div>
+  <h1>나이키 로그인</h1>
 
   {% if login_form %}
-  <form method="POST">
+  <form method="POST" class="form-box-signIn">
     {% csrf_token %} {{ login_form.as_p }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="로그인" />
   </form>
   {% else %}
   <div>{{ message }}</div>
@@ -14,4 +19,5 @@
     </button>
   </a>
   {% endif %}
-</div>
+</section>
+{% endblock %}

@@ -2,8 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    msg = 'My message'
-    return render(request, 'product/index.html', {'message': msg})
+    return render(request, 'product/index.html', {})
 
 
 def product(request):
