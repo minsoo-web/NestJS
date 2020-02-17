@@ -47,7 +47,10 @@ def logout(request):
     return redirect('/')
 
 def profile(request):
-    return render(request, 'member/profile.html', {})
+    return render(request, 'member/profile-index.html', {})
+
+def order(request):
+    return render(request, 'member/profile-orders.html', {})    
 
 def my_profile(request):
     my_user_profile = Profile.objects.filter(user=request.user).first()
