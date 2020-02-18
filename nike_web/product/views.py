@@ -16,4 +16,5 @@ def cart(request):
 def detail(request):
     return render(request, 'product/detail.html', {})
 
-
+def best(request):
+    return render(request,'product/best.html',{})

@@ -44,7 +44,7 @@
           </div>
           <div id="order-wrapper">
             <a href="" class="round-btn-big">바로구매</a>
-            <a href="" class="round-btn-big white">장바구니 담기</a>
+            <span class="round-btn-big white" id="cart-btn">장바구니 담기</span>
           </div>
         </div>
       </div>
@@ -64,6 +64,38 @@
         height="745"
       ></iframe>
     </div>
-  </div>
+  </div>  
 </section>
+<div class="modal-cover">
+  <div class="mini-cart">
+    <div class="mini-cart-card">
+      <div class="mini-image-wrapper">
+        <a href=""><img src="" alt="미니썸네일"></a>
+      </div>
+      <div class="mini-cart-detail">
+        <span>나이키 리액트 인피니티 런</span>
+        <span>스타일</span>
+        <span>사이즈</span>
+        <span>수량</span>
+        <span>가격</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    // 모달 띄우기
+    $("#cart-btn").on('click',function(){
+      if(true){
+        $(".modal-cover").addClass("on-modal")
+      }
+      
+    })
+    // 검정화면 클릭시 모달 끄기
+    $(".modal-cover").on('click',function(){
+      $(this).removeClass("on-modal")
+    })
+  })
+</script>
+
 {% endblock %}

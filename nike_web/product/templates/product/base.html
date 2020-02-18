@@ -15,10 +15,11 @@
     <link rel="stylesheet" href="{% static 'product/css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'product/css/aside.css' %}" />
     <link rel="stylesheet" href="{% static 'product/css/content.css' %}" />
+    <link rel="stylesheet" href="{% static 'product/css/footer.css' %}" />
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- 회원가입, 로그인 페이지 js -->
-    <script src="{% static 'product/js/sign-up.js' %}"></script>
+    <script src="{% static 'product/js/member.js' %}"></script>
     <title>
       {% block title %}나이키. Just Do It. CloneNike.com{% endblock %}
     </title>
@@ -102,7 +103,7 @@
               <div class="nav-list-wrapper">
                 <ul class="nav-list category">
                   <li><a href="">신상품</a></li>
-                  <li><a href="">THE BEST</a></li>
+                  <li><a href="/product/best/">THE BEST</a></li>
                   <li><a href="">SALE</a></li>
                 </ul>
                 <ul class="nav-list shoes">
@@ -192,7 +193,7 @@
       <div id="hide-search-modal"></div>
       <div id="user-profile-drop">
         <a href="/member/profile/"><span>마이페이지</span></a>
-        <a href=""><span>회원정보관리</span></a>
+        <a href="/member/profile-update"><span>회원정보관리</span></a>
         <a href="/member/logout/"><span>로그아웃</span></a>
       </div>
     </nav>
@@ -213,11 +214,70 @@
     <!-- footer -->
     {% block footer %}
     <footer>
-      <ul>
-        <li>매장안내</li>
-        <li>로그인</li>
-        <li>회원가입</li>
-      </ul>
+      <div class="footer-header">
+        <ul class="col col1">
+          <li class="list-title">
+            <a href=""><span>매장안내</span></a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="list-title">
+            <a href="/member/logout/"><span>로그아웃</span></a>
+          </li>
+          {% else %}
+          <!-- 로그인 안 했을 경우 -->
+          <li class="list-title">
+            <a href="/member/signup/"><span>회원가입</span></a>
+            <a href="/member/login/"><span>/ 로그인</span></a>
+          </li>
+          {% endif %}
+        </ul>
+        <ul class="col col2">
+          <li class="list-title"><span>고객센터</span></li>
+          <li>
+            <a href=""><span>080-022-0182</span></a>
+          </li>
+          <li>
+            <a href=""><span>주문/결제</span></a>
+          </li>
+          <li>
+            <a href=""><span>배송</span></a>
+          </li>
+          <li>
+            <a href=""><span>주문배송조회</span></a>
+          </li>
+          <li>
+            <a href=""><span>멤버쉽 혜택/서비스</span></a>
+          </li>
+          <li>
+            <a href=""><span>공지사항</span></a>
+          </li>
+          <li>
+            <a href=""><span>1:1 채팅 문의</span></a>
+          </li>
+          <li>
+            <a href=""><span>1:1 이메일문의</span></a>
+          </li>
+          <li>
+            <a href=""><span>이용약관</span></a>
+          </li>
+          <li>
+            <a href=""><span>개인정보처리방침</span></a>
+          </li>
+        </ul>
+        <ul class="col col3">
+          <li class="list-title"><span>ABOUT NIKE</span></li>
+          <li>
+            <a href=""><span>나이키에 대하여</span></a>
+          </li>
+        </ul>
+        <ul class="col col4">
+          <li class="list-title"><span>SOCIAL</span></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
     </footer>
     {% endblock %}
   </body>
