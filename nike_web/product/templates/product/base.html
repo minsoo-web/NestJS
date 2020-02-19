@@ -10,6 +10,12 @@
       rel="stylesheet"
       href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
     />
+    <link
+      href="../../static/product/img/favicon.ico"
+      rel="icon"
+      type="image/x-icon"
+    />
+
     <link rel="stylesheet" href="{% static 'product/css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'product/css/nav.css' %}" />
     <link rel="stylesheet" href="{% static 'product/css/style.css' %}" />
@@ -19,15 +25,17 @@
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- 회원가입, 로그인 페이지 js -->
-    <script src="{% static 'product/js/member.js' %}"></script>
     <title>
       {% block title %}나이키. Just Do It. CloneNike.com{% endblock %}
     </title>
   </head>
   <body>
-    <div class="whole-wrapper"></div>
     <!-- nav -->
     {% block navbar %}
+    <input type="checkbox" id="sidebar" />
+
+    <label for="sidebar" id="whole-wrapper"></label>
+
     <nav>
       <!-- upper-nav -->
       <div class="nav-upper flex-box">
@@ -174,6 +182,7 @@
         </div>
 
         <!-- only mobile screen -->
+
         <div id="nav-mobile" class="flex-box">
           <div class="icon-wrapper" id="search-icon">
             <i class="xi-search"></i>
@@ -181,7 +190,9 @@
           <a href="/cart/"
             ><div class="icon-wrapper"><i class="xi-cart"></i></div
           ></a>
-          <div class="icon-wrapper" id="hamburger"><i class="xi-bars"></i></div>
+          <div class="icon-wrapper" id="hamburger">
+            <label for="sidebar"><i class="xi-bars"></i></label>
+          </div>
           <div class="hide-search">
             <div class="hide-input-wrapper">
               <i class="xi-search" id="hide-search-icon"></i>
@@ -198,6 +209,39 @@
       </div>
     </nav>
 
+    <div id="hide-sidebar">
+      <ul id="sidebar-inner-box">
+        {% if user.is_authenticated %}
+        <li>
+          <a href="/member/logout/"><span>로그아웃</span></a>
+        </li>
+        {% else %}
+        <!-- 로그인 안 했을 경우 -->
+        <li>
+          <a href="/member/signup/"><span>회원가입</span></a>
+          <a href="/member/login/"><span>/ 로그인</span></a>
+        </li>
+        {% endif %}
+        <li>
+          <a href=""><span>New Releasses</span></a>
+        </li>
+        <li>
+          <a href=""><span>Men</span></a>
+        </li>
+        <li>
+          <a href=""><span>Women</span></a>
+        </li>
+        <li>
+          <a href=""><span>Kids</span></a>
+        </li>
+        <li>
+          <a href=""><span>SALE</span></a>
+        </li>
+        <li>
+          <a href="/member/profile/"><span>마이페이지</span></a>
+        </li>
+      </ul>
+    </div>
     <!-- nav js -->
     <script src="{% static 'product/js/nav.js' %}"></script>
     <script src="{% static 'product/js/profile-dropdown.js' %}"></script>

@@ -11,10 +11,10 @@ $(function() {
 });
 
 $(function() {
-  $(".search").focus(function() {
-    $(".whole-wrapper").addClass("bg-black");
+  $("#hamburger label").click(function() {
+    $("body").css("overflow", "hidden");
   });
-  $(".search").blur(function() {
-    $(".whole-wrapper").removeClass("bg-black");
+  $("#whole-wrapper").click(function() {
+    $("body").css("overflow", "auto");
   });
 });
