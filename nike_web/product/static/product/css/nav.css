@@ -263,6 +263,7 @@ input#sidebar {
 
 #hide-sidebar {
   position: fixed;
+  display: none;
   z-index: 20000;
   opacity: 0;
   top: 0;
@@ -287,23 +288,6 @@ input#sidebar {
 #hamburger > label {
   cursor: pointer;
 }
-
-#sidebar-inner-box {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-#sidebar-inner-box li {
-  padding: 20px;
-  background-color: rgb(247, 248, 247);
-}
-#sidebar-inner-box li:first-child {
-  background-color: #ffffff;
-}
-#sidebar-inner-box li + li {
-  border-top: 1px solid #e0e0e0;
-}
-
 @media screen and (max-width: 883px) {
   .nav-upper {
     width: 0;
@@ -341,7 +325,24 @@ input#sidebar {
     left: -470px;
   }
   input#sidebar:checked ~ #hide-sidebar {
+    display: block;
     opacity: 1;
     right: 0;
+  }
+
+  #sidebar-inner-box {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  #sidebar-inner-box li {
+    padding: 20px;
+    background-color: rgb(247, 248, 247);
+  }
+  #sidebar-inner-box li:first-child {
+    background-color: #ffffff;
+  }
+  #sidebar-inner-box li + li {
+    border-top: 1px solid #e0e0e0;
   }
 }
