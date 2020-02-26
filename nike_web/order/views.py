@@ -7,12 +7,17 @@
 
 from django.views.generic import TemplateView, View
 from product.models import Inventory, Cart
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Order, OrderList, Shipping
 from django.http import HttpResponse
 import json
+from .forms import ShippingForm
+
 
 def checkout(request):
-    return render(request,'order/checkout.html',{})
+    shipping_instance = Shipping.objects.all()
+    return render(request, 'order/checkout.html', {'shipping_instance': shipping_instance})
+
 
 class ToCheckout1(View):
     def post(self, request, *args, **kwargs):
@@ -76,3 +81,21 @@ class Checkout2View(TemplateView):
         context['order_list'] = order_list
 
         return context
+
+
+def Shippings(request):
+    #shipping_instance = get_object_or_404(Shipping)
+    if request.method == 'POST':
+        ship = Shipping.objects.create(user_id=request.user)
+        shipping = ShippingForm(request.POST, instance=ship)
+        if shipping.is_valid():
+            shipping.save()
+            return redirect('order:shipping-show')
+    else:
+        form = ShippingForm()
+    return render(request, 'order/shipping.html', {'form': form})
+
+
+def ShippingShow(request):
+    shipping_instance = Shipping.objects.all()
+    return render(request, 'order/shipping-show.html', {'shipping_instance': shipping_instance})

@@ -29,7 +29,7 @@ nav li a {
   border-bottom: 0.5px solid rgb(229, 229, 229);
 }
 
-/* nav-upper */
+/* ---------------------------------------------------------------------------------------------- nav-upper */
 .nav-upper {
   height: 38px;
   line-height: 38px;
@@ -75,7 +75,7 @@ nav li a {
   line-height: 38px;
 }
 
-/* nav-lower */
+/* ---------------------------------------------------------------------------------------------- nav-lower */
 .nav-lower {
   box-sizing: border-box;
   height: 70px;

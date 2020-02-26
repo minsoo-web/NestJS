@@ -1,0 +1,17 @@
+{% extends "member/profile-base.html" %}
+
+<!-- content -->
+{% block profileContent %}
+<!-- 로그인이 되어 있다면 -->
+{% if user.is_authenticated %}
+<form method="POST" action="{% url 'order:shipping' %}">
+  {% csrf_token %} {{ form }}
+  <input type="submit" value="배송지 추가" />
+</form>
+{% else %}
+<div>
+  <a href="{% url 'member:login'%}">
+    <button type="submit">로그인하기</button>
+  </a>
+</div>
+{% endif %} {% endblock %}

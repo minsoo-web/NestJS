@@ -125,11 +125,13 @@
                   <li><a href="">축구</a></li>
                   <li><a href="">샌들 & 슬리퍼</a></li>
                 </ul>
-                <ul class="nav-list sports">
-                  <li class="list-title"><a href="">스포츠</a></li>
-                  <li><a href="">러닝</a></li>
-                  <li><a href="">농구</a></li>
-                  <li><a href="">축구</a></li>
+                <ul class="nav-list brands">
+                  <li class="list-title"><a href="">브랜드</a></li>
+                  <li>
+                    <a href="https://www.nike.com/kr/ko_kr/l/jordan">Jordan</a>
+                  </li>
+                  <li><a href="https://www.converse.co.kr/">converse</a></li>
+                  <li><a href="https://www.nike.com/kr/ko_kr/l/acg">ACG</a></li>
                 </ul>
               </div>
             </div>
@@ -148,9 +150,13 @@
                   <li class="list-title"><a href="">신발전체</a></li>
                   {% for category in categorys %} {% endfor %}
                 </ul>
-                <ul class="nav-list sports">
-                  <li class="list-title"><a href="">스포츠</a></li>
-                  {% for category in categorys %} {% endfor %}
+                <ul class="nav-list brands">
+                  <li class="list-title"><a href="">브랜드</a></li>
+                  <li>
+                    <a href="https://www.nike.com/kr/ko_kr/l/jordan">Jordan</a>
+                  </li>
+                  <li><a href="https://www.converse.co.kr/">converse</a></li>
+                  <li><a href="https://www.nike.com/kr/ko_kr/l/acg">ACG</a></li>
                 </ul>
               </div>
             </div>
@@ -169,9 +175,13 @@
                   <li class="list-title"><a href="">신발전체</a></li>
                   {% for category in categorys %} {% endfor %}
                 </ul>
-                <ul class="nav-list sports">
-                  <li class="list-title"><a href="">스포츠</a></li>
-                  {% for category in categorys %} {% endfor %}
+                <ul class="nav-list brands">
+                  <li class="list-title"><a href="">브랜드</a></li>
+                  <li>
+                    <a href="https://www.nike.com/kr/ko_kr/l/jordan">Jordan</a>
+                  </li>
+                  <li><a href="https://www.converse.co.kr/">converse</a></li>
+                  <li><a href="https://www.nike.com/kr/ko_kr/l/acg">ACG</a></li>
                 </ul>
               </div>
             </div>
@@ -184,8 +194,7 @@
           <input type="text" placeholder="검색" class="search" />
         </div>
 
-        <!-- only mobile screen -->
-
+        <!-- ------------------------------------------------------------------------------- only mobile screen -->
         <div id="nav-mobile" class="flex-box">
           <div class="icon-wrapper" id="search-icon">
             <i class="xi-search"></i>
@@ -212,6 +221,7 @@
       </div>
     </nav>
 
+    <!-- ------------------------------------------------------------------------------- hide-sidebar -->
     <div id="hide-sidebar">
       <ul id="sidebar-inner-box">
         {% if user.is_authenticated %}

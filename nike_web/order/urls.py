@@ -10,4 +10,6 @@ urlpatterns = [
     path('to-checkout1/', views.ToCheckout1.as_view(), name='to-checkout1'),
     path('to-checkout2/', views.ToCheckout2.as_view(), name='to-checkout2'),
     path('checkout/', views.checkout, name='checkout'),
+    path('shipping/', views.Shippings, name='shipping'),
+    path('shipping-show/', views.ShippingShow, name='shipping-show'),
 ]
