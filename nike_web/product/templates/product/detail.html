@@ -1,4 +1,11 @@
-{% extends "product/base.html" %}
+{% extends "product/base.html" %} {% load humanize %}
+
+<!-- 템플릿 확장 -->
+{% load static %}
+<!-- js -->
+{% block link %}
+<script src="{% static 'product/js/detail.js' %}"></script>
+{% endblock %}
 
 <!-- content -->
 {% block content %}
@@ -8,38 +15,45 @@
     <div class="detail-img-gallery">
       <div class="detail-img-wrapper">
         <a href=""
-          ><img
-            src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/product/CD0881-103/a893445e-c7c5-4b3f-a90e-31ff643728a7_primary.jpg?browse"
-            alt="이미지 상세 보기"
+          ><img src="{{ product.thumbnail.url }}" alt="이미지 상세 보기"
         /></a>
       </div>
+      {% for p in product_image %}
+      <div class="detail-img-wrapper">
+        <a href=""><img src="{{ p.image.url }}" alt="이미지 상세 보기"/></a>
+      </div>
+      {% endfor %}
     </div>
     <!-- right 상세 설정 -->
     <div class="detail-selection">
       <div class="detail-product-info">
         <div class="detail-item-tilte">
           <div class="detail-title-header">
-            <span>남성 신발 라이프스타일{{product.subtitle}}</span>
-            <span class="big-title">139,000{{product.price}}</span>
+            <span>{{ category.name }}</span>
+            <span>{{ product.price|intcomma }}원</span>
           </div>
-          <h2 class="big-title">나이키 에어맥스 90 {{product.title}}</h2>
+          <h2 class="big-title">{{ product.name }}</h2>
         </div>
         <!-- size select -->
         <div class="order-box">
           <div class="size-wrapper">
             <h3>사이즈 선택</h3>
+            {% for i in inventory %}
             <span>
-              <label for="260">260</label>
-              <input type="radio" name="size" id="260" value="260" />
+              <label for="{{ i.pk }}">{{ i.size }}</label>
+              <input
+                type="radio"
+                name="inventory"
+                id="{{ i.pk }}"
+                value="{{ i.pk }}"
+              />
             </span>
-            <span>
-              <label for="270">270</label>
-              <input type="radio" name="size" id="270" value="270" />
-            </span>
+            {% endfor %}
             <div class="detail-num">
+              <span>수량</span>
               <span id="numOfItems"></span>
               <button id="increaseNum">+</button>
-              <button id="decreaseNum">-</button id="decreaseNum">
+              <button id="decreaseNum">-</button>
             </div>
           </div>
           <div id="order-wrapper">
@@ -50,52 +64,60 @@
       </div>
     </div>
   </div>
-  <!-- main detail-view -->
-  <div class="detail-view">
-    <div class="detail-view-wrap">
-      <img
-        src="https://static-breeze.nike.co.kr/kr/ko_kr/cmsstatic/structured-content/2357/200207_nsw_epdp_volt_bg-1.jpg"
-        alt=""
-      />
-      <iframe
-        src="https://players.brightcove.net/72451143001/Hk7rH5kvb_default/index.html?videoId=6120496352001"
-        allowfullscreenallow="encrypted-media"
-        width="960"
-        height="745"
-      ></iframe>
-    </div>
-  </div>  
 </section>
 <div class="modal-cover">
   <div class="mini-cart">
     <div class="mini-cart-card">
       <div class="mini-image-wrapper">
-        <a href=""><img src="" alt="미니썸네일"></a>
+        <a href=""><img src="{{ product.thumbnail.url }}" alt="미니썸네일"/></a>
       </div>
       <div class="mini-cart-detail">
-        <span>나이키 리액트 인피니티 런</span>
-        <span>스타일</span>
-        <span>사이즈</span>
-        <span>수량</span>
-        <span>가격</span>
+        <ul>
+          <li>{{ product.name }}</li>
+          <li>{{ category.name }}</li>
+          <li id="selected_size"></li>
+          <li id="selected_quantity"></li>
+          <li>{{ product.price|intcomma }}</li>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 <script>
-  $(document).ready(function(){
-    // 모달 띄우기
-    $("#cart-btn").on('click',function(){
-      if(true){
-        $(".modal-cover").addClass("on-modal")
-      }
-      
-    })
-    // 검정화면 클릭시 모달 끄기
-    $(".modal-cover").on('click',function(){
-      $(this).removeClass("on-modal")
-    })
-  })
-</script>
+  $(document).ready(function() {
+    $("#cart-btn").on("click", function() {
+      var inventory_id = $('input[name="inventory"]:checked').val();
+      var quantity = $("#numOfItems").text();
 
+      if (inventory_id == null) {
+        alert("사이즈를 선택해주세요");
+        return;
+      }
+
+      $.ajax({
+        type: "POST",
+        url: "{% url 'products:add-cart' %}",
+        data: {
+          inventory: inventory_id,
+          quantity: quantity,
+          csrfmiddlewaretoken: "{{ csrf_token }}"
+        },
+        success: function(response) {
+          var answer = response.result;
+          if (answer == "success") {
+            $(".modal-cover").addClass("on-modal");
+            $("#selected_size").text(inventory_id);
+            $("#selected_quantity").text(quantity);
+            $("body").css({ overflow: "hidden" });
+          } else if (answer == "no user") alert("로그인하세요!");
+        }
+      });
+    });
+    // 검정화면 클릭시 모달 끄기
+    $(".modal-cover").on("click", function() {
+      $(this).removeClass("on-modal");
+      $("body").css({ overflow: "auto" });
+    });
+  });
+</script>
 {% endblock %}
