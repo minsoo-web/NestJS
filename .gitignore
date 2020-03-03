@@ -9,6 +9,7 @@ nike/
 db.sqlite3
 
 migrations
+Todo.md
 
 *~
 __pycache__
