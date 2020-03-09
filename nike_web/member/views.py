@@ -5,7 +5,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from .models import Profile, Order
+from product.models import Cart
 from django.contrib.auth.decorators import login_required
+from order.models import OrderList
+from product.models import Cart
 
 
 def signup(request):
@@ -35,6 +38,8 @@ def login(request):
         login_form = AuthenticationForm(request, request.POST)
         if login_form.is_valid():
             auth_login(request, login_form.get_user())
+            request.session['cart_count'] = Cart.objects.filter(
+                user_id=request.user.pk).count()
         else:
             return render(request, 'member/login.html', {'message': 'password not match'})
         return redirect('/')
@@ -50,28 +55,35 @@ def logout(request):
 
 
 def profile(request):
-    my_user_profile = Profile.objects.filter(user=request.user).first()
-    my_orders = Order.objects.filter(is_ordered=True, owner=my_user_profile)
+    my_orders = OrderList.objects.all().order_by('-id')[:4]
+    my_carts = Cart.objects.all().order_by('-id')[:4]
     context = {
-        'my_orders': my_orders
+        'my_orders': my_orders,
+        'my_carts': my_carts
     }
-    return render(request, 'member/profile.html', {'context':context})
+    return render(request, 'member/profile.html', context)
 
 
 def order(request):
-    return render(request, 'member/profile-orders.html', {})
+    my_orders = OrderList.objects.all().order_by('-id')
+    context = {
+        'my_orders': my_orders
+    }
+    return render(request, 'member/profile-orders.html', context)
 
 
 @login_required
 def user_info_update(request):
     if request.method == 'POST':
-        user_change_form = CustomUserChangeForm(request.POST, instance=request.user)
+        user_change_form = CustomUserChangeForm(
+            request.POST, instance=request.user)
         if user_change_form.is_valid():
             user_change_form.save()
             return redirect('member:profile')
     else:
         user_change_form = UserChangeForm(instance=request.user)
-    return render(request, 'member/profile-update.html', {'user_change_form':user_change_form})
+    return render(request, 'member/profile-update.html', {'user_change_form': user_change_form})
+
 
 @login_required
 def user_info_delete(request):
@@ -79,6 +91,7 @@ def user_info_delete(request):
         request.user.delete()
         return redirect('/')
     return render(request, 'member/profile-delete.html')
+
 
 @login_required
 def user_info_password(request):
@@ -90,4 +103,3 @@ def user_info_password(request):
     else:
         password_change_form = PasswordChangeForm(request.user)
     return render(request, 'member/profile-password.html', {'password_change_form':password_change_form})
-

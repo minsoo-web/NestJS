@@ -10,6 +10,7 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     cellphone_number = models.FloatField(default=None)
@@ -19,8 +20,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-class OrderItem(models.Model): # 내가 주문한 아이템
-    product = models.OneToOneField(Product, on_delete=models.SET_NULL, null=True)
+
+class OrderItem(models.Model):  # 내가 주문한 아이템
+    product = models.OneToOneField(
+        Product, on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
     date_added = models.DateTimeField(auto_now=True)
     date_ordered = models.DateTimeField(null=True)
@@ -28,7 +31,8 @@ class OrderItem(models.Model): # 내가 주문한 아이템
     def __str__(self):
         return self.product.name
 
-class Order(models.Model): # 카트에 들어 있는 아이템
+
+class Order(models.Model):  # 카트에 들어 있는 아이템
     ref_code = models.CharField(max_length=15)
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
