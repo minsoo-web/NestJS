@@ -1,7 +1,7 @@
 import json
 
 from django.db.models import F
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import UserCreateForm, CustomUserChangeForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
@@ -46,7 +46,7 @@ def login(request):
             request.session['cart_count'] = Cart.objects.filter(
                 user_id=request.user.pk).count()
         else:
-            return render(request, 'member/login.html', {'message': 'password not match'})
+            return render(request, 'member/login.html', {'message': '아이디와 비밀번호가 일치하지 않습니다.', 'login_form': login_form})
         return redirect('/')
     else:
         login_form = AuthenticationForm()
@@ -61,19 +61,19 @@ def logout(request):
 
 def rate(request):
     my_profile = Profile.objects.all()
-    orders = Order.objects.all()
+    orders = Order.objects.filter(user_id=request.user)
     total = sum([order.total_price for order in orders])
-    if total > 150000:
+    if total > 1000000:
         my_profile.user_grade = 'mvp'
         my_profile.coupon = '30%'
-    elif total > 100000:
+    elif total > 500000:
         my_profile.user_grade = 'platinum'
         my_profile.coupon = '20%'
     else:
         my_profile.user_grade = 'normal'
         my_profile.coupon = '10%'
     context = {
-        'total':total,
+        'total': total,
         'my_profile': my_profile
     }
     return render(request, 'member/profile-rate.html', context)
@@ -119,12 +119,11 @@ def profile(request):
     # user_id에 해당하는 order_id 찾아서 리스트로 만들기
     order_id_list = Order.objects.filter(
         user_id=user_id).values_list('id', flat=True)
-
     my_orders = OrderList.objects.filter(
         order_id__in=order_id_list).order_by('-id')[:4]
     my_carts = Cart.objects.filter(user_id=user_id).order_by('-id')[:4]
     my_profile = Profile.objects.all()
-    orders = Order.objects.all()
+    orders = Order.objects.filter(user_id=user_id)
     total = sum([order.total_price for order in orders])
     if total > 150000:
         my_profile.user_grade = 'mvp'
@@ -135,8 +134,8 @@ def profile(request):
     else:
         my_profile.user_grade = 'normal'
         my_profile.coupon = '10%'
+
     context = {
-        'my_profile': my_profile,
         'my_orders': my_orders,
         'my_carts': my_carts
     }
@@ -210,8 +209,20 @@ def change_shipping(request):
 
 
 def id_find(request):
-    user = User.objects.all()
-    id = user.username
-    email = user.email
-    info = {'id': id, 'email': email}
-    return HttpResponse(json.dumps({'info': info}), content_type="application/json")
+    email = request.POST['email']
+    # template에서 받아온 email과 일치하는 이메일을 갖는 user queryset 반환
+    data = User.objects.filter(email=email)
+
+    datas = []
+
+    for dt in data:
+        datas.append({'id': dt.username, ''})
+    # username = data.username
+    # user_email = email
+    # last_name = data.last_name
+    # first_name = data.first_name
+    # name = first_name + last_name
+    # date_joined = data.date_joined
+
+    # info = {'username':username, 'name':name, 'user_email':user_email, 'date_joined':date_joined }
+    return HttpResponse(json.dumps({'email': email, 'info': datas}, indent=4, sort_keys=True, default=str), content_type="application/json")
