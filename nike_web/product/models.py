@@ -1,25 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import datetime
 
 
 class Category(models.Model):
-    main_class = models.CharField(max_length=25, unique=False)
-    sub_class = models.CharField(max_length=25, unique=False)
-    shoes_sub = models.CharField(max_length=25, blank=True)
+    name = models.CharField(max_length=25, unique=True, default='라이프스타일')
 
     def __str__(self):
-        return '{} : {} : {} : {}'.format(self.pk, self.main_class, self.sub_class, self.shoes_sub)
-
-    def name(self):
-        return '{} {} {}'.format(self.main_class, self.sub_class, self.shoes_sub)
+        return '{} : {}'.format(self.pk, self.name)
 
 
 class Product(models.Model):
     # 상품번호, 상품명, 상품가격, 카테고리번호, (총재고량), 출시일, 판매량, 썸네일 이미지
-    name = models.CharField(max_length=30, unique=True)
+
+    GENDER_CHOICES = (
+        ('MEN', 'MEN'),
+        ('WOMEN', 'WOMEN'),
+    )
+
+    name = models.CharField(max_length=30, unique=False)
+    gender = models.CharField(max_length=5, choices=GENDER_CHOICES, default=1)
     price = models.IntegerField()
-    # 상품번호. 나중에 blank=false로 바꿀예정
-    style = models.CharField(max_length=10, blank=True)
+    style = models.CharField(max_length=10)    # 상품번호. 나중에 blank=false로 바꿀예정
     # 카테고리에 속한 상품 존재하면 카테고리 삭제 불가
     category_id = models.ForeignKey(Category, on_delete=models.PROTECT)
     soldout = models.BooleanField(default=False)   # 재고 있으면 False, 품절이면 True
@@ -28,7 +31,10 @@ class Product(models.Model):
     thumbnail = models.ImageField(upload_to='product/thumbnail/')
 
     def __str__(self):
-        return '{}'.format(self.name)
+        return '{} : {}'.format(self.pk, self.name)
+
+    def category_name(self):
+        return '{} {}'.format(self.gender, self.category_id.name)
 
 
 class Inventory(models.Model):
@@ -36,10 +42,17 @@ class Inventory(models.Model):
     product_id = models.ForeignKey(
         Product, on_delete=models.PROTECT)  # 재고 존재하면 상품 삭제 불가
     size = models.CharField(max_length=10)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=0)
 
     def __str__(self):
         return '{}: {}'.format(self.product_id, self.size)
+
+    # def soldout(self):
+    #     if (self.amount - self.sale) == 0:
+    #         self.soldout = True
+    #     else:
+    #         self.soldout = False
+    #     self.save()
 
 
 class ProductImage(models.Model):

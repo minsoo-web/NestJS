@@ -100,21 +100,7 @@
         <h3 class="big-title">아이디 / 비밀번호 찾기</h3>
         <p>검색하신 계정의 정보들 입니다.</p>
         <p>찾으시는 계정이 있습니까?</p>
-        <ul class="find-profile-listWrapper">
-          <li class="find-profile-list">
-            <div>
-              <p>
-                <span class="find-profile-userID"></span>
-              </p>
-              <span>내 계정이 맞습니다.</span>
-            </div>
-            <ul>
-              <li class="find-profile-email"></li>
-              <li class="find-profile-name"></li>
-              <li class="find-profile-dateJoined"></li>
-            </ul>
-          </li>
-        </ul>
+        <ul class="find-profile-listWrapper"></ul>
         <span id="back-to-lastStep">이전단계</span>
       </div>
     </div>
@@ -141,8 +127,49 @@
               $("#email-verify").css({ display: "none" });
               $("#email-verified").css({ display: "block" });
               console.log(response);
-              console.log(response.info.length)
-              console.log(response.info[0])
+              console.log(response.info.length);
+              for (var i = 0; i < response.info.length; i++) {
+                var date = response.info[i].date.substring(0, 16);
+                var name = response.info[i].name;
+                if (name.length === 0) {
+                  name = "해당 고객님 성함 정보가 없습니다.";
+                }
+                $(".find-profile-listWrapper").append(`
+                <li class="find-profile-list">
+                  <div>
+                    <p>
+                      <span class="find-profile-userID">아이디 : ${response.info[i].id}</span>
+                    </p>
+                    <span id="profile-${i}" class="find-profile-confirm">내 계정이 맞습니다.</span>
+                  </div>
+                  <ul>
+                    <li class="find-profile-email" id="profile-email-${i}">${response.info[i].email}</li>
+                    <li class="find-profile-name">${name}</li>
+                    <li class="find-profile-dateJoined">가입한 일시 : ${date}</li>
+                  </ul>
+                </li>`);
+              }
+              // email 발송 해야댐
+              $(".find-profile-confirm").click(function() {
+                var number = Number(
+                  $(this)
+                    .attr("id")
+                    .split("-")[1]
+                );
+
+                //  이메일
+                console.log(response.info[number].email);
+                
+                $(".find-profile-listWrapper").remove();
+                $("#email-verified p").remove();
+                $("#email-verified h3").after(
+                  `<p>비밀번호를 재설정하기 위한</p>
+                   <p>안내 메일을 발송했습니다.</p>
+                   <p>메일로 발송된 링크를 눌러</p>
+                   <p>비밀번호를 재설정하세요.</p>
+                   `
+                );
+              });
             },
             error: function(response) {
               console.log("에러", response.status);
