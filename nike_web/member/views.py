@@ -216,13 +216,7 @@ def id_find(request):
     datas = []
 
     for dt in data:
-        datas.append({'id': dt.username, ''})
-    # username = data.username
-    # user_email = email
-    # last_name = data.last_name
-    # first_name = data.first_name
-    # name = first_name + last_name
-    # date_joined = data.date_joined
-
+        datas.append({'id': dt.username,'email': dt.email,'date' : dt.date_joined, 'name': dt.last_name + dt.first_name})
+    
     # info = {'username':username, 'name':name, 'user_email':user_email, 'date_joined':date_joined }
-    return HttpResponse(json.dumps({'email': email, 'info': datas}, indent=4, sort_keys=True, default=str), content_type="application/json")
+    return HttpResponse(json.dumps({'info': datas}, indent=4, sort_keys=True, default=str), content_type="application/json")
