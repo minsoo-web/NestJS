@@ -66,8 +66,10 @@
       <form method="POST" action="">
         {% csrf_token %}
         <span>삭제 하시겠습니까?</span>
-        <label for="shipping-modify">취소</label>
-        <input type="submit" value="삭제" />
+        <div class="form-delete-wrapper">
+          <label for="shipping-modify">취소</label>
+          <input type="submit" value="삭제" />
+        </div>
       </form>
     </div>
     {% else %}
@@ -111,12 +113,20 @@
       <span class="color-gray">연락처</span>
       <span class="{{ship.pk}}">{{ ship.receiver_phone }}</span>
     </p>
-    <label for="shipping-modify" val="open-update-shipping" class="{{ship.pk}} "
-      >수정</label
-    >
-    <label for="shipping-modify" val="open-remove-shipping" class="{{ship.pk}} "
-      >삭제</label
-    >
+    <div class="shipping-edit">
+      <label
+        for="shipping-modify"
+        val="open-update-shipping"
+        class="{{ship.pk}} "
+        >수정</label
+      >
+      <label
+        for="shipping-modify"
+        val="open-remove-shipping"
+        class="{{ship.pk}} "
+        >삭제</label
+      >
+    </div>
   </div>
   {% endfor %}
 </div>
