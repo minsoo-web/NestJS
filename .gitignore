@@ -1,0 +1,15 @@
+/myvenv
+
+.idea/
+
+nike/
+
+*.pyc
+
+db.sqlite3
+
+migrations
+Todo.md
+
+*~
+__pycache__
