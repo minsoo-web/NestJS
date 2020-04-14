@@ -1,0 +1,29 @@
+{% extends "member/profile-base.html" %}{% load humanize %}
+
+<!-- static 확장 -->
+{% load static %}
+<!-- link -->
+{% block link %}
+<link rel="stylesheet" href="{% static 'member/css/profile-rate.css' %}" />
+{% endblock %}
+
+<!-- 타이틀 -->
+{% block title %}나이키{% endblock %}
+
+<!-- content -->
+{% block profileContent %}
+<div class="profile-list-title">
+  <h2 class="big-title">회원등급 현황</h2>
+</div>
+<header class="profile-rate">
+  <p>회원등급</p>
+  <p class="big-title"><strong>{{ my_profile.user_grade }}</strong></p>
+</header>
+<div>
+  <div></div>
+  <div>
+    <span>{{total|intcomma}}원</span>
+  </div>
+</div>
+<h5>보유쿠폰: {{ my_profile.coupon }}</h5>
+{% endblock %}
