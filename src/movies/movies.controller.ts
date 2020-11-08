@@ -8,6 +8,8 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
+import { CreateMovieDTO } from './dto/create-movie.dto';
+import { UpdateMovieDTO } from './dto/update-movie.dto';
 import { Movie } from './entities/movie.entity';
 import { MoviesService } from './movies.service';
 
@@ -21,27 +23,27 @@ export class MoviesController {
   }
 
   @Get('search')
-  search(@Query('year') searchingYear: string) {
+  search(@Query('year') searchingYear: number) {
     return `We are searching movie with made after ${searchingYear}`;
   }
 
   @Get('/:id')
-  getOne(@Param('id') movieId: string): Movie {
-    return this.moviesServices.getOne(movieId);
+  getOne(@Param('id') movieId: number): Movie {
+    return this.moviesServices.ge tOne(movieId);
   }
 
   @Post()
-  create(@Body() movieData) {
+  create(@Body() movieData: CreateMovieDTO) {
     return this.moviesServices.create(movieData);
   }
 
   @Delete('/:id')
-  remove(@Param('id') movieId: string) {
+  remove(@Param('id') movieId: number) {
     return this.moviesServices.deleteOne(movieId);
   }
 
   @Patch('/:id')
-  patch(@Param('id') movieId: string, @Body() updateData) {
+  patch(@Param('id') movieId: number, @Body() updateData: UpdateMovieDTO) {
     return this.moviesServices.patch(movieId, updateData);
   }
 }
