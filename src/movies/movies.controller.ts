@@ -29,7 +29,7 @@ export class MoviesController {
 
   @Get('/:id')
   getOne(@Param('id') movieId: number): Movie {
-    return this.moviesServices.ge tOne(movieId);
+    return this.moviesServices.getOne(movieId);
   }
 
   @Post()

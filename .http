@@ -17,7 +17,7 @@ POST http://localhost:3000/movies HTTP/1.1
 content-type: application/json
 
 {
-    "title": "movie1",
+    "title": "",
     "year": 2001,
     "genres": ["romance","comic"]
 }
@@ -29,7 +29,7 @@ DELETE http://localhost:3000/movies/2 HTTP/1.1
 
 ###
 
-PATCH http://localhost:3000/movies/1
+PATCH http://localhost:3000/movies/3
 content-type: application/json
 
 {
