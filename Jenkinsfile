@@ -7,10 +7,12 @@ pipeline {
 
     stages {
         stage('BUILD IMAGE'){
-            sh """
-            ls
-            pwd
-            """
+            steps{
+                sh """
+                ls
+                pwd
+                """
+            }
         }
     }
 }
