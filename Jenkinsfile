@@ -14,6 +14,12 @@ pipeline {
                 fi
                 docker build -t nest-app .
                 docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+                '''
+            }
+        }
+        stage('RUN CONTAINER'){
+            steps{
+                sh'''
                 docker run -itd --name nest -p 3000:3000 nest-app:latest
                 '''
             }
