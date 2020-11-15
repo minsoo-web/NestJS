@@ -9,11 +9,18 @@ pipeline {
         stage('BUILD IMAGE'){
             steps{
                 sh '''
-                if test ! -z "$(sudo docker ps -af name=nest | grep -w nest$)"; then
-                    sudo docker stop nest && sudo docker rm nest
+                if test ! -z "$(docker ps -af name=nest | grep -w nest$)"; then
+                    docker stop nest && docker rm nest
                 fi
-                sudo docker build -t nest-app .
-                sudo docker run -itd --name nest -p 3000:3000 nest-app:latest
+                docker build -t nest-app .
+                docker run -itd --name nest -p 3000:3000 nest-app:latest
+                '''
+            }
+        }
+        stage('RUN UNITTEST'){
+            steps{
+                sh '''
+                docker exec -t npm run test               
                 '''
             }
         }
