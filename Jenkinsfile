@@ -9,6 +9,7 @@ pipeline {
         stage('BUILD IMAGE'){
             sh """
             ls
+            pwd
             """
         }
     }
