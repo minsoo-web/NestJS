@@ -13,6 +13,7 @@ pipeline {
                     docker stop nest && docker rm nest
                 fi
                 docker build -t nest-app .
+                docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
                 docker run -itd --name nest -p 3000:3000 nest-app:latest
                 '''
             }
@@ -20,7 +21,7 @@ pipeline {
         stage('RUN UNITTEST'){
             steps{
                 sh '''
-                docker exec -t npm run test               
+                docker exec -t nest npm run test
                 '''
             }
         }
